@@ -8,4 +8,5 @@ pool.query('SELECT NOW()', (err, res) => {
   }
   console.log('found the results', res);
   pool.end();
-})
+});
+

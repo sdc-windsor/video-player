@@ -14,7 +14,13 @@ app.use(morgan('dev'));
 app.listen(port, () => console.log(`listening on port ${port}`));
 
 app.get('/videos/:video_id', (req, res) => {
+  
+  res.end();
+});
 
+app.get('/thumbnails/:video_id', (req, res) => {
+
+  res.end();
 });
 
 

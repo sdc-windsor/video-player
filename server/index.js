@@ -18,18 +18,16 @@ app.get('/videos/:id', (req, res) => {
 });
 
 app.get('/thumbnails/:id', (req, res) => {
-  let id = req.params;
-  console.log('found the seedDB***', db('videos'));
-  // db('videos').select('thumbnails').where('id', id)
-  //   .catch((err) => {
-  //     console.log('could not find thumbnails', err)
-  //   }).then((res) => {
-  //   if (res) {
-  //     console.log('found the thumbnails', res);
-  //   }
-  //   res.send('found the thumbnails');
-  // });
-  res.end();
+  let id = JSON.parse(req.params.id);
+  db.select('thumbnail').from('videos').where('id', id)
+    .catch((err) => {
+      console.log('could not find thumbnails', err)
+    }).then((thumbnail) => {
+    if (thumbnail) {
+      console.log('found the thumbnails', thumbnail);
+    }
+    res.send(thumbnail);
+  });
 });
 
 

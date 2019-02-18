@@ -1,9 +1,6 @@
 const faker = require('faker');
 const fs = require('fs');
 
-// keep track of id's for JSON data
-let authors = ['Madeline Sharafian','Rudy Wilms', ''];
-
 /*
 video urls:
 1.'https://player.vimeo.com/video/65107797'
@@ -47,27 +44,6 @@ Thumbnails:
 10."https://i.vimeocdn.com/video/35989560_130x73.jpg"
 */
 
-
-
-/*
-1. create JSON data in order to seed db with.
-2. Mock up an example of the expected data
-*/
-
-/*
-[
-  {
-    "id": "1",
-    "video_url": "https://player.vimeo.com/video/65107797",
-    "thumbnail":"https://i.vimeocdn.com/video/435992078_130x73.jpg",
-    "title": "hello there" (random string with faker)
-    "author": "Bob Saget" (random string with faker)
-    "plays": "19385444" (random-number with faker)
-  }
-]
-*/
-
-// create algorithm here
 const videoUrls = [
   "https://player.vimeo.com/video/65107797/",
   "https://player.vimeo.com/video/316284002/",
@@ -128,9 +104,12 @@ const generateJSONVideoData = (arr1, arr2) => {
 
 let videoData = generateJSONVideoData(videoUrls, thumbnails);
 
-fs.writeFile(__dirname + '/videoData.json', JSON.stringify(videoData, null, 2), (err) => {
-  if (err) {
-    console.log('unable to write JSON file', err);
-  }
-  console.log('Success you wrote the file!!!');
-});
+// commented out to note override the JSON data that will be used to store it in the db.
+// fs.writeFile(__dirname + '/videoData.json', JSON.stringify(videoData, null, 2), (err) => {
+//   if (err) {
+//     console.log('unable to write JSON file', err);
+//   }
+//   console.log('Success you wrote the file!!!');
+// });
+
+exports.videoData = videoData;

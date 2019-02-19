@@ -1,5 +1,4 @@
 const videoData = require('../helpers/video-data');// array of video data
-const knex = require('knex');
 const db = require('../db/index.js');
 
 db.schema.dropTableIfExists('videos').then((exists) => {
@@ -14,12 +13,9 @@ db.schema.dropTableIfExists('videos').then((exists) => {
     t.string('title', 50);
     t.string('author', 50);
     t.integer('plays');
-  }).then((res)=> {
-    if (res) {
-      console.log('Successfully created Table in db', res);
-    }
   }).then(() => {
-    return db('videos').insert(videoData).catch((err) => {
+    return db('videos').insert(videoData)
+    .catch((err) => {
       console.log('found an error in db seeding', err);
     }).then(() => {
       return db.select('*').from('videos').then((rows) => {
@@ -33,15 +29,3 @@ db.schema.dropTableIfExists('videos').then((exists) => {
 });
 
 module.exports = db;
-
-// db('videos').insert(videoData)
-//   .catch((err) => {
-//     console.log('found an error in db seeding', err);
-//   }).then(() => {
-//     return db.select('*').from('videos').then((rows) => {
-//       if (!rows) {
-//         console.log('rows not found', rows);
-//       }
-//       console.log('Success! Here are the rows:', rows);
-//     });
-//   });

@@ -11,4 +11,4 @@ const db = knex({
   }
 });
 
-module.exports = db
+module.exports = db;

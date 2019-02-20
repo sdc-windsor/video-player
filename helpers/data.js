@@ -39,7 +39,7 @@ const generateJSONVideoData = (arr1, arr2) => {
     // assign current url to a variable
     let url = arr1[counter];
     // update the url with incrementing queryNumber
-    let updatedUrl = `${url}?v=${queryNum}`
+    let updatedUrl = `${url}?v=${queryNum}`;
     // create key's in the object and use faker for some of the vals
     data.push({
       video_id: JSON.stringify(queryNum),

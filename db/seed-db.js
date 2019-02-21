@@ -15,16 +15,16 @@ db.schema.dropTableIfExists('videos').then((exists) => {
     t.integer('plays');
   }).then(() => {
     return db('videos').insert(videoData)
-    .catch((err) => {
-      console.log('found an error in db seeding', err);
-    }).then(() => {
-      return db.select('*').from('videos').then((rows) => {
-        if (!rows) {
-          console.log('rows not found', rows);
-        }
-        console.log('Success! Here are the rows:', rows);
+      .catch((err) => {
+        console.log('found an error in db seeding', err);
+      }).then(() => {
+        return db.select('*').from('videos').then((rows) => {
+          if (!rows) {
+            console.log('rows not found', rows);
+          }
+          console.log('Success! Here are the rows:', rows);
+        });
       });
-    });
   });
 });
 

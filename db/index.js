@@ -7,8 +7,8 @@ const db = knex({
     host: '127.0.0.1',
     user: 'ckallemeyn',
     password: process.env.PASSWORD,
-    database: 'videos'
-  }
+    database: 'videos',
+  },
 });
 
 module.exports = db;

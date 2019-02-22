@@ -6,20 +6,25 @@ module.exports = {
   mode: 'development',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, './public/dist')
+    path: path.resolve(__dirname, './public/dist'),
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ['babel-loader'],
+      },
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader', 'eslint-loader'],
       },
       {
         test: /\.(css)$/,
         exclude: /node_modules/,
-        use: ['css-loader', 'style-loader']
-      }
-    ]
-  }
-}
+        use: ['css-loader', 'style-loader'],
+      },
+    ],
+  },
+};

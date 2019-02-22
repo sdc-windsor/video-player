@@ -1,12 +1,12 @@
 ## MAC files ##
 .DS_Store
-.env
+
 ## NPM ##
 npm
 npm-debug.log
 node_modules/
 
-
+*.env
 pids
 *.pid
 logs

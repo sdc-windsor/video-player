@@ -1,17 +1,49 @@
 {
-  "name": "",
+  "name": "videoplayer-service",
   "version": "",
-  "description": "",
-  "author": "",
-  "license": "",
+  "description": "video player service for Vimeo clone",
+  "author": "ckallemeyn",
+  "license": "MIT",
   "engines": {
     "node": ">=6.13.0"
   },
   "scripts": {
+    "server-dev": "nodemon server/server.js",
+    "seed": "node db/seed-db.js",
+    "test": "jest --detectOpenHandles"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "faker": "^4.1.0",
+    "knex": "^0.16.3",
+    "morgan": "^1.9.1",
+    "pg": "^7.8.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
   },
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "chai": "^4.2.0",
+    "css-loader": "^2.1.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.1.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
+    "style-loader": "^0.23.1",
+    "superagent": "^4.1.0",
+    "supertest": "^3.4.2",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3"
   }
 }

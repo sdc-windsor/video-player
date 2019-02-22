@@ -1,6 +1,6 @@
 # Project Name
 
-> Project description
+> videoplayer service for vimeo clone
 
 ## Related Projects
 
@@ -23,7 +23,7 @@
 
 An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
 
-- Node 6.13.0
+- Node v10.14.1
 - etc
 
 ## Development

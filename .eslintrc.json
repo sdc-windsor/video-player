@@ -1,5 +1,4 @@
 {
-  "parser": "babel-eslint",
   "plugins": [
     "react"
   ],
@@ -14,6 +13,9 @@
     "arrow-body-style" : ["warn","always"],
     "no-unused-expressions": 0,
     "no-plusplus": 0,
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "react/prefer-stateless-function": "off",
+    "no-useless-constructor": "off",
+    "import/extensions": "off"
   }
 }

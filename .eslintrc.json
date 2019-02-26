@@ -16,6 +16,9 @@
     "consistent-return": "off",
     "react/prefer-stateless-function": "off",
     "no-useless-constructor": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "max-len": "off",
+    "operator-linebreak": "off",
+    "react/jsx-wrap-multilines": "off"
   }
 }

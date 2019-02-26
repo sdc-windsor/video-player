@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Nav, NavItem, Button} from 'reactstrap';
-import { FaRegPaperPlane, FaRegHeart, FaPlus} from 'react-icons/fa';
+import { Nav, NavItem, Button } from 'reactstrap';
+import { FaRegPaperPlane, FaRegHeart, FaPlus } from 'react-icons/fa';
 import ReactPlayer from 'react-player';
-
 
 export default class VideoNav extends Component {
   constructor(props) {
@@ -10,42 +9,58 @@ export default class VideoNav extends Component {
 
     this.state = {
       scroll: 0,
-    }
+    };
 
     this.handleScroll = this.handleScroll.bind(this);
   }
 
-  handleScroll(e) {
-    e.preventDefault();
-    this.setState({
-      scroll: window.scrollY
-    });
-  }
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
   }
 
+  handleScroll() {
+    this.setState({
+      scroll: window.scrollY,
+    });
+  }
 
   render() {
     const { scroll } = this.state;
+    const { url, title } = this.props;
     return (
       <div>
         {(scroll > 484) &&
         <Nav classID="navbar" color="black">
           <NavItem>
-            <ReactPlayer className="mini-vid" width="140px" height="95px" url="https://vimeo.com/299541287"/>
+            <ReactPlayer
+              className="mini-vid"
+              width="140px"
+              height="95px"
+              url={url}
+              />
           </NavItem>
           <NavItem className="item">
-            <Button color="primary"> <FaRegHeart/> Like </Button>
-          </NavItem>
-          <NavItem className="item" >
-            <Button color="primary"> <FaPlus/> Follow </Button>
+            <Button color="primary">
+              <FaRegHeart />
+              {' Like'}
+            </Button>
           </NavItem>
           <NavItem className="item">
-            <Button color="primary"> <FaRegPaperPlane/> Share </Button>
+            <Button color="primary">
+              <FaPlus />
+              {' Follow'}
+            </Button>
           </NavItem>
-        </Nav> }
+          <NavItem className="item">
+            <Button color="primary">
+              <FaRegPaperPlane />
+              {' Share'}
+            </Button>
+          </NavItem>
+          <h5 className="nav-title">{title}</h5>
+        </Nav>
+        }
       </div>
-    )
+    );
   }
 }

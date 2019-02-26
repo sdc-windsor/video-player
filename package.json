@@ -15,11 +15,13 @@
   },
   "scripts": {
     "react-dev": "webpack -d --watch",
+    "build": "webpack -p",
     "server-dev": "nodemon server/server.js",
     "seed": "node db/seed-db.js",
     "test": "jest --detectOpenHandles"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
     "dotenv": "^6.2.0",

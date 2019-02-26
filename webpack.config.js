@@ -5,7 +5,7 @@ module.exports = {
   entry: ['@babel/polyfill', './client/src/components/Index.jsx'],
   mode: 'development',
   output: {
-    filename: 'bundle.js',
+    filename: 'videoplayer.js',
     path: path.resolve(__dirname, './public/dist'),
   },
   module: {

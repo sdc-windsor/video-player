@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Nav, NavItem, Button } from 'reactstrap';
 import { FaRegPaperPlane, FaRegHeart, FaPlus } from 'react-icons/fa';
 import ReactPlayer from 'react-player';
@@ -37,7 +38,7 @@ export default class VideoNav extends Component {
               width="140px"
               height="95px"
               url={url}
-              />
+            />
           </NavItem>
           <NavItem className="item">
             <Button color="primary">
@@ -64,3 +65,8 @@ export default class VideoNav extends Component {
     );
   }
 }
+
+VideoNav.propTypes = {
+  url: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};

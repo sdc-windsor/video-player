@@ -13,7 +13,7 @@ app.use(morgan('dev'));
 app.get('/videos/:id', (req, res) => {
   const id = JSON.parse(req.params.id);
 
-  db.select('id', 'title', 'author', 'plays')
+  db.select('id', 'video_url', 'title', 'author', 'plays')
     .from('videos')
     .where('id', id)
     .then((data) => {

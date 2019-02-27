@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "react"
+  ],
   "env": {
     "browser": true,
     "es6": true,
@@ -10,6 +13,13 @@
     "arrow-body-style" : ["warn","always"],
     "no-unused-expressions": 0,
     "no-plusplus": 0,
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "react/prefer-stateless-function": "off",
+    "no-useless-constructor": "off",
+    "import/extensions": "off",
+    "max-len": "off",
+    "operator-linebreak": "off",
+    "react/jsx-wrap-multilines": "off",
+    "camelcase": "off"
   }
 }

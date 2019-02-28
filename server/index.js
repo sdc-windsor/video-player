@@ -3,15 +3,18 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 require('dotenv').config(); // will be used in production later
 const db = require('../db/index.js');
+const path = require('path');
 
 const app = express();
-app.use(express.static('./public/dist'));
+app.use(express.static(path.join(__dirname, '/../public/dist')));
+app.use('/:id', express.static(path.join(__dirname, '/../public/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.get('/videos/:id', (req, res) => {
-  const id = JSON.parse(req.params.id);
+  const id = req.params.id;
+  console.log('found the id in req', id);
 
   db.select('id', 'video_url', 'title', 'author', 'plays')
     .from('videos')
@@ -27,17 +30,18 @@ app.get('/videos/:id', (req, res) => {
 });
 
 app.get('/thumbnails/:id', (req, res) => {
-  const id = JSON.parse(req.params.id);
+  let id = req.params.id;
+  let params = (id.length > 1) ? id.split(',') : [id];
 
   db.select('thumbnail').from('videos')
-    .where('id', id)
+    .whereIn('id', params)
     .catch((err) => {
       console.log('could not find thumbnail', err);
     })
-    .then((thumbnail) => {
-      if (thumbnail) {
-        console.log('found the thumbnail', thumbnail);
-        res.json(thumbnail);
+    .then((thumbnailArr) => {
+      if (thumbnailArr) {
+        console.log('found the thumbnail', thumbnailArr);
+        res.json(thumbnailArr);
       } else {
         res.send('unable to find thumbnail');
       }

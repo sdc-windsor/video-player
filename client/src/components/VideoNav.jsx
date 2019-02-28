@@ -16,7 +16,7 @@ export default class VideoNav extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
   }
 
   handleScroll() {

@@ -1,54 +1,64 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
+import axios from 'axios';
 import VideoNav from './VideoNav.jsx';
-import getVideoData from '../../../helpers/getVideoData.js';
+// import getVideoData from '../../../helpers/getVideoData.js';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      video_url: 'https://player.vimeo.com/video/54802209/?v=5',
-      title: 'Marcus Island',
-      searchedId: 3,
+      video_url: '',
+      title: '',
     };
 
     this.retrieveData = this.retrieveData.bind(this);
   }
 
-  componentWillMount() {
-    this.retrieveData();
+  componentDidMount() {
+    let id = window.location.pathname;
+    console.log('****ID IN COMPONENTDIDMOUNT****', id);
+    (id === '/') ? id = '/1' : id;
+    this.retrieveData(id);
   }
 
-  async retrieveData() {
-    const { searchedId } = this.state;
-    const response = await getVideoData(searchedId);
-    if (response) {
-      console.log('SUCCESS YOU RETRIEVED THE DATA', response);
-      const { video_url, title } = response.data[0];
-      this.setState({
-        video_url,
-        title,
+  retrieveData(id) {
+    return axios.get(`http://localhost:3000/videos${id}`)
+      .then((response) => {
+        console.log('SUCCESS YOU RETRIEVED THE DATA', response);
+        const { video_url, title } = response.data[0];
+        this.setState({
+          video_url,
+          title,
+        });
+      })
+      .catch((error) => {
+        if (error) {
+          console.error('ERROR IN AXIOS API REQ', error);
+        }
       });
-    }
   }
 
   render() {
     const { video_url, title } = this.state;
-
     return (
-      <div className="video-container">
-        <div className="player">
-          <ReactPlayer
-            className="reactPlayer"
-            width="100%"
-            height="500px"
-            url={video_url}
-          />
+      <div>
+        {(video_url === '') ? <div>Loading...</div> :
+        <div className="video-container">
+          <div className="player">
+            <ReactPlayer
+              className="reactPlayer"
+              width="100%"
+              height="500px"
+              url={video_url}
+            />
+          </div>
+          <div>
+            <VideoNav url={video_url} title={title} />
+          </div>
         </div>
-        <div>
-          <VideoNav url={video_url} title={title} />
-        </div>
+        }
       </div>
     );
   }

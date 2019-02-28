@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 require('dotenv').config(); // will be used in production later
-const db = require('../db/index.js');
 const path = require('path');
+const db = require('../db/index.js');
 
 const app = express();
 app.use(express.static(path.join(__dirname, '/../public/dist')));
@@ -13,8 +13,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.get('/videos/:id', (req, res) => {
-  const id = req.params.id;
-  console.log('found the id in req', id);
+  const { id } = req.params;
 
   db.select('id', 'video_url', 'title', 'author', 'plays')
     .from('videos')
@@ -30,8 +29,8 @@ app.get('/videos/:id', (req, res) => {
 });
 
 app.get('/thumbnails/:id', (req, res) => {
-  let id = req.params.id;
-  let params = (id.length > 1) ? id.split(',') : [id];
+  const { id } = req.params;
+  const params = (id.length > 1) ? id.split(',') : [id];
 
   db.select('thumbnail').from('videos')
     .whereIn('id', params)

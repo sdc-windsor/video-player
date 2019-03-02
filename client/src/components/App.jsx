@@ -26,7 +26,7 @@ export default class App extends Component {
   retrieveData(id) {
     return axios.get(`http://localhost:3000/videos${id}`)
       .then((response) => {
-        console.log('SUCCESS YOU RETRIEVED THE DATA', response);
+        console.log('SUCCESS YOU RETRIEVED THE DATA', response.data);
         const { video_url, title } = response.data[0];
         this.setState({
           video_url,
@@ -35,7 +35,7 @@ export default class App extends Component {
       })
       .catch((error) => {
         if (error) {
-          console.error('ERROR IN AXIOS API REQ', error);
+          console.error('ERROR IN AXIOS API REQUEST', error);
         }
       });
   }

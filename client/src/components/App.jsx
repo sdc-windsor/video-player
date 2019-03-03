@@ -22,7 +22,7 @@ export default class App extends Component {
   }
 
   retrieveData(id) {
-    return axios.get(`http://localhost:3000/videos${id}`)
+    return axios.get(`/videos${id}`)
       .then((response) => {
         const { video_url, title } = response.data[0];
         this.setState({

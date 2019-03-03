@@ -3,7 +3,7 @@ require('@babel/polyfill');
 
 module.exports = {
   entry: ['@babel/polyfill', './client/src/components/Index.jsx'],
-  mode: 'development',
+  mode: 'production',
   output: {
     filename: 'videoplayer.js',
     path: path.resolve(__dirname, './public/dist'),

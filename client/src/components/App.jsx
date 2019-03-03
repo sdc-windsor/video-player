@@ -22,7 +22,8 @@ export default class App extends Component {
   }
 
   retrieveData(id) {
-    return axios.get(`/videos${id}`)
+    const url = 'http://videoplayerservice-env.cdi5d5qypg.us-east-2.elasticbeanstalk.com';
+    return axios.get(`${url}/videos${id}`)
       .then((response) => {
         const { video_url, title } = response.data[0];
         this.setState({

@@ -1,8 +1,7 @@
 const path = require('path');
-require('@babel/polyfill');
 
 module.exports = {
-  entry: ['@babel/polyfill', './client/src/components/Index.jsx'],
+  entry: './client/src/components/Index.jsx',
   mode: 'production',
   output: {
     filename: 'videoplayer.js',

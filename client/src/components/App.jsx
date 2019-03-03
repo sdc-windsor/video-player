@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
 import VideoNav from './VideoNav.jsx';
-// import getVideoData from '../../../helpers/getVideoData.js';
 
 export default class App extends Component {
   constructor(props) {

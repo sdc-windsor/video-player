@@ -1,13 +1,12 @@
-# Project Name
+# Video Player Service
 
-> videoplayer service for vimeo clone
+> video player for vimeo clone
 
 ## Related Projects
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
+  - https://github.com/rpt11-spider-n-sleet/felipe-service
+  - https://github.com/rpt11-spider-n-sleet/huy-service
+
 
 ## Table of Contents
 

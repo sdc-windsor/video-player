@@ -4,9 +4,9 @@
 
 ## Table of Contents
 
-1.1 [Related Projects](#Related Projects)
-1.2 [Usage](#Usage)
-1.3 [API](#API Endpoints)
+1.1 [1.1 Related Projects](#11Related-Projects)
+1.2 [1.2 Usage](#12-Usage)
+1.3 [1.3 API](#13-API-Endpoints)
 2. [Requirements](#requirements)
 3. [Development](#development)
 
@@ -15,7 +15,7 @@
   - Related Videos: https://github.com/rpt11-spider-n-sleet/felipe-service
   - Description/Comments: https://github.com/rpt11-spider-n-sleet/huy-service
 
-## 1.1 Usage
+## 1.2 Usage
 
 > This service contains a video player and video player nav-bar widgets. To coincide with these two widgets there are a few respective endpoints that interact with a postgreSQL database in order to display mock data about the videos. This service acts as the, "source of truth" for the other microservices in this project. 
 
@@ -24,7 +24,7 @@
 
 **Video Player Nav-bar**
 
-## 1.2 API Endpoints
+## 1.3 API Endpoints
 
 >The following endpoints return mock video data to be consumed by all three microservices: 
 

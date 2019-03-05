@@ -20,6 +20,7 @@
 > This service contains a video player and video player nav-bar widgets. To coincide with these two widgets there are a few respective endpoints that interact with a postgreSQL database in order to display mock data about the videos. This service acts as the, "source of truth" for the other microservices in this project. 
 
 **Video Player**
+![](vidplayersmall.gif)
 
 **Video Player Nav-bar**
 

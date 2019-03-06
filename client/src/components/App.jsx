@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
 import VideoNav from './VideoNav.jsx';
+import MovieNav from './MovieNav.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -43,18 +44,21 @@ export default class App extends Component {
     return (
       <div>
         {(video_url === '') ? <div>Loading...</div> :
-        <div className="video-container">
-          <div className="player">
-            <ReactPlayer
-              className="reactPlayer"
-              width="100%"
-              height="500px"
-              url={video_url}
-            />
-          </div>
-          <div>
-            <VideoNav url={video_url} title={title} />
-          </div>
+        <div>
+          <MovieNav/>
+            <div className="video-container">
+              <div className="player">
+                <ReactPlayer
+                  className="reactPlayer"
+                  width="100%"
+                  height="500px"
+                  url={video_url}
+                  />
+              </div>
+              <div>
+                <VideoNav url={video_url} title={title} />
+              </div>
+            </div>
         </div>
         }
       </div>

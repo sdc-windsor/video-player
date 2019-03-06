@@ -5,15 +5,16 @@
 }
 
 ul {
-  background: black;
-  color: white;
+  /* make an adjustment to both navbars here Mess around with z index in order to stack them on top of one another. */
+  /* background: black; */
+  /* color: white;
   width: 100%;
   height: 120px;
   padding: 1.1em;
   min-height: 75px;
   position: fixed;
   top: 0;
-  z-index: 4;
+  z-index: 4; */
 }
 
 .item {

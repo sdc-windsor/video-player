@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Collapse,
+import {
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
@@ -10,6 +9,7 @@ import { Collapse,
   DropdownToggle,
   DropdownMenu,
   DropdownItem, Button, Label, Input } from 'reactstrap';
+  import { MdCloudUpload, MdSearch } from 'react-icons/md'
 
 export default class MovieNav extends Component {
   constructor(props) {
@@ -29,39 +29,46 @@ export default class MovieNav extends Component {
   render() {
     return (
       <div className="MovieNav">
-        <Navbar color="light" light expand="sm">
-          <NavbarBrand className="brand">Movie</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav color="light" className="ml-auto" navbar>
-              <NavItem>
-                <Button color="primary">Upload</Button>
+        <Navbar color="light" light expand="md">
+          <NavbarBrand className="brand" href="https://fontmeme.com/vimeo-font/">
+          <img src="https://fontmeme.com/permalink/190306/41c30725258e006cf97cd3c8d478931e.png" alt="vimeo-font" border="0"/>
+          </NavbarBrand>
+            <Nav color="light" style={{"width": "-webkit-fill-available"}} navbar>
+              <NavItem className="m-1">
+                <Button color="success" size="md">Join</Button>
               </NavItem>
-              <NavItem>
-                <Input type="text" placeholder="Search videos,people, and more">
-
-                </Input>
-              </NavItem>
-              <NavItem>
-                <Button color="disabled">Stock</Button>
-              </NavItem>
-              <NavItem>
-                <Button color="disabled">Watch</Button>
-              </NavItem>
-              <NavItem>
-                <Button color="disabled">Features</Button>
-              </NavItem>
-              <NavItem>
-                <Button color="disabled">Pricing</Button>
-              </NavItem>
-              <NavItem>
+              <NavItem className="m-1">
                 <Button color="disabled">Log in</Button>
               </NavItem>
-              <NavItem>
-                <Button color="success" size="sm">Join</Button>
+              <NavItem className="m-1">
+                <Button color="disabled">Pricing</Button>
+              </NavItem>
+              <NavItem className="m-1">
+                <Button color="disabled">Features</Button>
+              </NavItem>
+              <NavItem className="m-1">
+                <Button color="disabled">Watch</Button>
+              </NavItem>
+              <NavItem className="m-1">
+                <Button color="disabled">Stock</Button>
+              </NavItem>
+              <NavItem className="ml-auto mr-0 mt-1 mb-1">
+                <Input
+                  className="p-1"
+                  type="text"
+                  placeholder="search videos">
+                </Input>
+              </NavItem>
+              <NavItem className="m-1">
+              <Button className="mr-2 ml-0 pl-0" color="disabled">
+                  <MdSearch/>
+                </Button>
+                <Button color="primary">
+                  <MdCloudUpload/>
+                  {' Upload'}
+                </Button>
               </NavItem>
             </Nav>
-          </Collapse>
         </Navbar>
       </div>
     )

@@ -6,7 +6,7 @@ npm
 npm-debug.log
 node_modules/
 
-*.env
+.env
 pids
 *.pid
 logs

@@ -4,17 +4,21 @@
   position: relative;
 }
 
-ul {
-  /* make an adjustment to both navbars here Mess around with z index in order to stack them on top of one another. */
-  /* background: black; */
-  /* color: white;
+#video-nav {
+  background: black;
+  color: white;
   width: 100%;
   height: 120px;
   padding: 1.1em;
   min-height: 75px;
   position: fixed;
-  top: 0;
-  z-index: 4; */
+  top: 62px;
+  z-index: 3;
+}
+#movie-nav {
+  position:fixed;
+  width: 100%;
+  z-index: 3;
 }
 
 .item {
@@ -35,5 +39,5 @@ ul {
   margin: 0px;
   height: 28px;
   position: inherit;
-  left: 8.6em;
+  left: 9.5em;
 }

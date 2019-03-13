@@ -31,7 +31,7 @@ export default class VideoNav extends Component {
     return (
       <div>
         {(scroll > 484) &&
-        <Nav classID="navbar" color="black">
+        <Nav id="video-nav" color="black">
           <NavItem>
             <ReactPlayer
               className="mini-vid"

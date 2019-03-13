@@ -4,10 +4,10 @@ require('dotenv').config();
 const db = knex({
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
+    host: process.env.RDS_HOSTNAME,
     user: 'ckallemeyn',
-    password: process.env.PASSWORD,
-    database: 'videos',
+    password: process.env.RDS_PASSWORD,
+    database: process.env.RDS_DBNAME,
   },
 });
 

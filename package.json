@@ -16,7 +16,7 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "build": "webpack -p",
-    "server-dev": "nodemon server/server.js",
+    "start": "node server/server.js",
     "seed": "node db/seed-db.js",
     "test": "jest --detectOpenHandles"
   },

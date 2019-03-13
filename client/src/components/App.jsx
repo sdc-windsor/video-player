@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
 import VideoNav from './VideoNav.jsx';
-// import getVideoData from '../../../helpers/getVideoData.js';
+import MovieNav from './MovieNav.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -18,15 +18,14 @@ export default class App extends Component {
 
   componentDidMount() {
     let id = window.location.pathname;
-    console.log('****ID IN COMPONENTDIDMOUNT****', id);
     (id === '/') ? id = '/1' : id;
     this.retrieveData(id);
   }
 
   retrieveData(id) {
-    return axios.get(`http://localhost:3000/videos${id}`)
+    const url = 'http://videoplayerservice-env.cdi5d5qypg.us-east-2.elasticbeanstalk.com';
+    return axios.get(`${url}/videos${id}`)
       .then((response) => {
-        console.log('SUCCESS YOU RETRIEVED THE DATA', response.data);
         const { video_url, title } = response.data[0];
         this.setState({
           video_url,
@@ -45,18 +44,21 @@ export default class App extends Component {
     return (
       <div>
         {(video_url === '') ? <div>Loading...</div> :
-        <div className="video-container">
-          <div className="player">
-            <ReactPlayer
-              className="reactPlayer"
-              width="100%"
-              height="500px"
-              url={video_url}
-            />
-          </div>
-          <div>
-            <VideoNav url={video_url} title={title} />
-          </div>
+        <div>
+          <MovieNav/>
+            <div className="video-container">
+              <div className="player">
+                <ReactPlayer
+                  className="reactPlayer"
+                  width="100%"
+                  height="500px"
+                  url={video_url}
+                  />
+              </div>
+              <div>
+                <VideoNav url={video_url} title={title} />
+              </div>
+            </div>
         </div>
         }
       </div>

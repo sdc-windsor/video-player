@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-require('dotenv').config(); // will be used in production later
+require('dotenv').config();
 const path = require('path');
 const cors = require('cors');
 const db = require('../db/index.js');
@@ -34,7 +34,7 @@ app.get('/thumbnails/:id', (req, res) => {
   const { id } = req.params;
   const params = (id.length > 1) ? id.split(',') : [id];
 
-  db.select('thumbnail').from('videos')
+  db.select('title', 'author', 'thumbnail').from('videos')
     .whereIn('id', params)
     .catch((err) => {
       console.log('could not find thumbnail', err);

@@ -5,7 +5,7 @@ const db = knex({
   client: 'pg',
   connection: {
     host: process.env.RDS_HOSTNAME,
-    user: 'ckallemeyn',
+    user: 'postgres',
     password: process.env.RDS_PASSWORD,
     database: process.env.RDS_DBNAME,
   },

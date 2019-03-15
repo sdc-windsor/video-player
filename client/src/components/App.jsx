@@ -23,7 +23,7 @@ export default class App extends Component {
   }
 
   retrieveData(id) {
-    const url = 'http://videoplayerservice-env.cdi5d5qypg.us-east-2.elasticbeanstalk.com';
+    const url = 'http://localhost:3001';
     return axios.get(`${url}/videos${id}`)
       .then((response) => {
         const { video_url, title } = response.data[0];
@@ -44,8 +44,8 @@ export default class App extends Component {
     return (
       <div>
         {(video_url === '') ? <div>Loading...</div> :
-        <div>
-          <MovieNav/>
+          <div>
+            <MovieNav />
             <div className="video-container">
               <div className="player">
                 <ReactPlayer
@@ -53,13 +53,13 @@ export default class App extends Component {
                   width="100%"
                   height="500px"
                   url={video_url}
-                  />
+                />
               </div>
               <div>
                 <VideoNav url={video_url} title={title} />
               </div>
             </div>
-        </div>
+          </div>
         }
       </div>
     );

@@ -27,31 +27,25 @@ const thumbnails = [
 ];
 
 const generateJSONVideoData = (arr1, arr2) => {
-  let counter = 0;
-  let queryNum = 1;
   const data = [];
   // iterate until there are 100 entries in the array
-  for (let i = 0; i <= 99; i++) {
+  for (let i = 0; i < 10000; i++) {
     // assign current url to a variable
-    const url = arr1[counter];
+    const url = arr1[Math.floor(Math.random() * arr1.length)];
     // update the url with incrementing queryNumber
-    const updatedUrl = `${url}?v=${queryNum}`;
+    const updatedUrl = `${url}?v=${i + 1}`;
     // create key's in the object and use faker for some of the vals
     data.push({
-      video_id: JSON.stringify(queryNum),
       video_url: updatedUrl,
-      thumbnail: arr2[counter],
+      thumbnail: arr2[Math.floor(Math.random() * arr2.length)],
       title: faker.address.streetName(),
       author: faker.internet.userName(),
-      plays: JSON.stringify(faker.random.number()),
+      plays: faker.random.number(),
     });
-    (counter === arr1.length - 1) ? counter = 0 : counter++;
-    queryNum++;
   }
-  // return the array obj;
   return data;
 };
 
 const videoData = generateJSONVideoData(videoUrls, thumbnails);
 
-exports.videoData = videoData;
+module.exports = videoData;

@@ -18,6 +18,7 @@
     "build": "webpack -p",
     "start": "node server/server.js",
     "seed": "node db/seed-db.js",
+    "seedSdc": "node db/seed-db-sdc.js",
     "test": "jest --detectOpenHandles"
   },
   "dependencies": {

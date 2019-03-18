@@ -1,16 +1,16 @@
 const videoData = require('../helpers/dataSdc.js');// array of video data
 const db = require('../db/index.js');
-var count = 0;
-var repeatTimes = 1000; //this number * 10000 = total records inserted
+let count = 0;
+const repeatTimes = 1000; //this number * 10000 = total records inserted
 
-var insertData = () => {
+let insertData = () => {
   return db('videos').insert(videoData)
-  .then(()=>{
-    if (count < repeatTimes) {
-      count++;
-      return insertData();
-    }
-  });
+    .then(() => {
+      if (count < repeatTimes) {
+        count++;
+        return insertData();
+      }
+    });
 }
 
 db.schema.dropTableIfExists('videos')

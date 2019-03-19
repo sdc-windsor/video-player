@@ -1,5 +1,5 @@
-const videoData = require('../helpers/dataSdc.js');// array of video data
-const db = require('../db/index.js');
+const videoData = require('../../helpers/dataSdc.js');// array of video data
+const db = require('../index.js');
 
 let count = 0;
 const repeatTimes = 10; //this number * 10000 = total records inserted

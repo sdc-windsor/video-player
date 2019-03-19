@@ -1,5 +1,5 @@
 const videoData = require('../helpers/video-data');// array of video data
-const db = require('../db/index.js');
+const db = require('./index.js');
 
 db.schema.dropTableIfExists('videos').then((exists) => {
   if (!exists) {

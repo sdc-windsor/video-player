@@ -29,7 +29,7 @@ const thumbnails = [
 const generateJSONVideoData = (arr1, arr2) => {
   const data = [];
   // iterate until there are 100 entries in the array
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 100000; i++) {
     // assign current url to a variable
     const url = arr1[Math.floor(Math.random() * arr1.length)];
     // update the url with incrementing queryNumber

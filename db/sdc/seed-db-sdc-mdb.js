@@ -1,23 +1,27 @@
+const { PerformanceObserver, performance } = require('perf_hooks');
 const videoData = require('../../helpers/dataSdc.js');// array of video data
 const indexMdb = require('./indexMdb.js');
-const db = indexMdb.db;
-const mongoose = indexMdb.mongoose;
+
+const [db, mongoose] = [indexMdb.db, indexMdb.mongoose];
+
+let initial = 0;
+let final = 0;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected to database');
   let count = 0;
-  const repeatTimes = 9; //this number * 10000 = total records inserted
+  const repeatTimes = 1; //this number * 100000 = total records inserted
 
-  let videoDataSchema = new mongoose.Schema({
+  const videoDataSchema = new mongoose.Schema({
     video_url: String,
     thumbnail: String,
     title: String,
     author: String,
-    plays: Number
+    plays: Number,
   });
 
-  let Video = mongoose.model('Video', videoDataSchema);
+  const Video = mongoose.model('Video', videoDataSchema);
 
   const insertData = () => {
     Video.insertMany(videoData)
@@ -26,19 +30,24 @@ db.once('open', () => {
           count++;
           return insertData();
         }
-      });
-  }
+      })
+      .then(() => {
+        final = performance.now();
+        console.log('time elapsed: ', final - initial)
+      })
+      .then(() => Video.estimatedDocumentCount())
+      .then(items => console.log(`Inserted ${items} records`));
+  };
 
-  Video.findById(1, (err, docs) => {
-    if (err) {
-      console.log('Error findById: ', err)
-      return insertData();
-    } else {
-      Video.deleteMany({}, err => console.log('Error: ', err))
-        .then(() => insertData())
-        .then(() => console.log('Inserted records'))
-        .catch(err => console.log('Error catch: ', err))
+  Video.deleteMany({}, (errDel) => {
+    if (errDel) {
+      console.log('Error: ', errDel);
     }
-  });
-
+    console.log('Inserting records... ');
+  })
+    .then(() => {
+      initial = performance.now();
+      return insertData();
+    })
+    .catch(errCatch => console.log('Error catch: ', errCatch));
 });

@@ -1,4 +1,4 @@
-const videoData = require('../../helpers/dataSdc.js');// array of video data
+const videoData = require('../../helpers/sdc/dataSdcPg.js');// array of video data
 const db = require('../index.js');
 
 let count = 0;

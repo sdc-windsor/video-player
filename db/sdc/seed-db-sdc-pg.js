@@ -1,9 +1,10 @@
-const videoData = require('../helpers/dataSdc.js');// array of video data
-const db = require('../db/index.js');
-let count = 0;
-const repeatTimes = 1000; //this number * 10000 = total records inserted
+const videoData = require('../../helpers/sdc/dataSdcPg.js');// array of video data
+const db = require('../index.js');
 
-let insertData = () => {
+let count = 0;
+const repeatTimes = 10; //this number * 10000 = total records inserted
+
+const insertData = () => {
   return db('videos').insert(videoData)
     .then(() => {
       if (count < repeatTimes) {

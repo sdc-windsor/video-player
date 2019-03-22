@@ -18,7 +18,8 @@
     "build": "webpack -p",
     "start": "node server/server.js",
     "seed": "node db/seed-db.js",
-    "seedSdc": "node db/seed-db-sdc.js",
+    "seedSdcPg": "node db/sdc/seed-db-sdc-pg.js",
+    "seedSdcMdb": "node --max-old-space-size=4096 db/sdc/seed-db-sdc-mdb.js",
     "test": "jest --detectOpenHandles"
   },
   "dependencies": {
@@ -31,6 +32,8 @@
     "faker": "^4.1.0",
     "jquery": "^3.3.1",
     "knex": "^0.16.3",
+    "mongodb": "^3.1.13",
+    "mongoose": "^5.4.19",
     "morgan": "^1.9.1",
     "pg": "^7.8.0",
     "popper.js": "^1.14.7",

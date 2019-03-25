@@ -2,7 +2,7 @@ const { PerformanceObserver, performance } = require('perf_hooks');
 const videoData = require('../../helpers/sdc/dataSdcMdb.js');// array of video data
 const indexMdb = require('./indexMdb.js');
 
-const [db, mongoose] = [indexMdb.db, indexMdb.mongoose];
+const [db, Video] = [indexMdb.db, indexMdb.Video];
 
 let initial = 0;
 let final = 0;
@@ -12,17 +12,6 @@ db.once('open', () => {
   console.log('Connected to database');
   let count = 0;
   const repeatTimes = 9; //this number * 100000 = total records inserted
-
-  const videoDataSchema = new mongoose.Schema({
-    id: Number,
-    video_url: String,
-    thumbnail: String,
-    title: String,
-    author: String,
-    plays: Number,
-  });
-
-  const Video = mongoose.model('Video', videoDataSchema);
 
   const insertData = () => {
     Video.estimatedDocumentCount()

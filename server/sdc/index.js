@@ -4,8 +4,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 const path = require('path');
 const cors = require('cors');
-const db = require('../db/index.js');
-const db2 = require('../db/sdc/indexMdb.js');
+const db = require('../../db/sdc/indexMdb.js');
 
 const app = express();
 app.use(express.static(path.join(__dirname, '/../public/dist')));
@@ -16,38 +15,35 @@ app.use(morgan('dev'));
 app.use(cors());
 
 app.get('/videos/:id', (req, res) => {
-  const { id } = req.params;
+  const docId = req.params.id;
 
-  db.select()
-    .from('videos')
-    .where('id', id)
-    .then((data) => {
-      console.log('here is a list of the data', data);
-      res.json(data);
+  db.Video.findOne({ id: docId })
+    .then((results) => {
+      res.json(results);
     })
     .catch((err) => {
-      console.log('could not find video', err);
-      res.send('unable to find data');
+      console.log('Could not find video', err);
+      res.send('Error getting data');
     });
-});
+})
+
 
 app.get('/thumbnails/:id', (req, res) => {
   const docId = req.params.id;
   const params = (docId.length > 1) ? docId.split(',') : [docId];
 
-  db.select('title', 'author', 'thumbnail').from('videos')
-    .whereIn('id', params)
-    .catch((err) => {
-      console.log('could not find thumbnail', err);
-    })
+  db.Video.find({ 'id': { $in: params } }, 'title author thumbnail')
     .then((thumbnailArr) => {
       if (thumbnailArr) {
-        console.log('found the thumbnail', thumbnailArr);
         res.json(thumbnailArr);
       } else {
-        res.send('unable to find thumbnail');
+        res.send('Unable to find thumbnail');
       }
+    })
+    .catch((err) => {
+      console.log('could not find thumbnail', err);
     });
+
 });
 
 module.exports = app;

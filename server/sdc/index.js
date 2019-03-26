@@ -103,7 +103,7 @@ app.get('/create/:id', (req, res) => {
 
   db.Video.find({ id: docId }, (err, docs) => {
     if (err) {
-      res.send(`error: ${err}`);
+      res.send(`Find error: ${err}`);
     } else if (Object.keys(docs).length === 0) {
       const newVideo = generateVideoData(videoData.videoUrls, videoData.thumbnails);
       newVideo.id = docId;
@@ -120,5 +120,20 @@ app.get('/create/:id', (req, res) => {
     }
   });
 });
+
+app.get('/delete/:id', (req, res)=>{
+  const docId = req.params.id;
+
+  db.Video.deleteOne({ id: docId })
+  .then((result)=>{
+    const deleted = result.deletedCount;
+
+    if (deleted === 0) {
+      res.send(`No video found with id: ${docId}.`);
+    } else {
+      res.send(`Deleted ${deleted} video at id: ${docId}.`);
+    }
+  })
+})
 
 module.exports = app;

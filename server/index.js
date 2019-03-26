@@ -5,7 +5,6 @@ require('dotenv').config();
 const path = require('path');
 const cors = require('cors');
 const db = require('../db/index.js');
-const db2 = require('../db/sdc/indexMdb.js');
 
 const app = express();
 app.use(express.static(path.join(__dirname, '/../public/dist')));
@@ -22,11 +21,11 @@ app.get('/videos/:id', (req, res) => {
     .from('videos')
     .where('id', id)
     .then((data) => {
-      console.log('here is a list of the data', data);
+      // console.log('here is a list of the data', data);
       res.json(data);
     })
     .catch((err) => {
-      console.log('could not find video', err);
+      // console.log('could not find video', err);
       res.send('unable to find data');
     });
 });
@@ -42,7 +41,7 @@ app.get('/thumbnails/:id', (req, res) => {
     })
     .then((thumbnailArr) => {
       if (thumbnailArr) {
-        console.log('found the thumbnail', thumbnailArr);
+        // console.log('found the thumbnail', thumbnailArr);
         res.json(thumbnailArr);
       } else {
         res.send('unable to find thumbnail');

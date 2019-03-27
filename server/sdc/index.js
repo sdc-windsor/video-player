@@ -84,21 +84,7 @@ app.get('/thumbnails/:id', (req, res) => {
     });
 });
 
-app.get('/update/:id', (req, res) => {
-  const docId = req.params.id;
-
-  db.Video.findOneAndUpdate({ id: docId }, generateVideoData(videoData.videoUrls, videoData.thumbnails), { new: true }, (err, doc) => {
-    if (err) {
-      res.send('Error updating document.');
-    }
-    res.send(`Document at id ${docId} updated to: ${doc}`);
-  })
-    .catch((error) => {
-      res.send(`Error: ${error}`);
-    });
-});
-
-app.get('/create/:id', (req, res) => {
+app.post('/videos/:id', (req, res) => {
   const docId = req.params.id;
 
   db.Video.find({ id: docId }, (err, docs) => {
@@ -121,7 +107,21 @@ app.get('/create/:id', (req, res) => {
   });
 });
 
-app.get('/delete/:id', (req, res)=>{
+app.patch('/videos/:id', (req, res) => {
+  const docId = req.params.id;
+
+  db.Video.findOneAndUpdate({ id: docId }, generateVideoData(videoData.videoUrls, videoData.thumbnails), { new: true }, (err, doc) => {
+    if (err) {
+      res.send('Error updating document.');
+    }
+    res.send(`Document at id ${docId} updated to: ${doc}`);
+  })
+    .catch((error) => {
+      res.send(`Error: ${error}`);
+    });
+});
+
+app.delete('/videos/:id', (req, res)=>{
   const docId = req.params.id;
 
   db.Video.deleteOne({ id: docId })

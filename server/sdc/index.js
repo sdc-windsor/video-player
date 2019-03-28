@@ -84,30 +84,25 @@ app.get('/thumbnails/:id', (req, res) => {
     });
 });
 
-app.post('/videos/:id', (req, res) => {
-  const docId = req.params.id;
+app.post('/videos', (req, res) => {
+  const url = videoData.videoUrls[Math.floor(Math.random() * videoData.videoUrls.length)];
+  const updatedUrl = `${url}?v=${Math.random() * Math.floor(100000)}`;
 
-  db.Video.find({ id: docId }, (err, docs) => {
-    if (err) {
-      res.send(`Find error: ${err}`);
-    } else if (Object.keys(docs).length === 0) {
-      const newVideo = generateVideoData(videoData.videoUrls, videoData.thumbnails);
-      newVideo.id = docId;
-
-      db.Video.create(newVideo, (createErr, newDoc) => {
-        if (createErr) {
-          res.send(`Create error: ${createErr}`);
-        } else {
-          res.send(`New video created: ${newDoc}`);
-        }
-      });
-    } else {
-      res.send(`Video already exists ${docs}`);
-    }
+  db.nextCount('videoId')
+  .then(newId => {
+    db.Video.create({
+      id: newId,
+      video_url: updatedUrl,
+      thumbnail: videoData.thumbnails[Math.floor(Math.random() * videoData.thumbnails.length)],
+      title: faker.address.streetName(),
+      author: faker.internet.userName(),
+      plays: faker.random.number(),
+    })
+    .then(result => res.send(`Created new video: ${result}`));
   });
 });
 
-app.patch('/videos/:id', (req, res) => {
+app.put('/videos/:id', (req, res) => {
   const docId = req.params.id;
 
   db.Video.findOneAndUpdate({ id: docId }, generateVideoData(videoData.videoUrls, videoData.thumbnails), { new: true }, (err, doc) => {
@@ -121,19 +116,19 @@ app.patch('/videos/:id', (req, res) => {
     });
 });
 
-app.delete('/videos/:id', (req, res)=>{
+app.delete('/videos/:id', (req, res) => {
   const docId = req.params.id;
 
   db.Video.deleteOne({ id: docId })
-  .then((result)=>{
-    const deleted = result.deletedCount;
+    .then((result) => {
+      const deleted = result.deletedCount;
 
-    if (deleted === 0) {
-      res.send(`No video found with id: ${docId}.`);
-    } else {
-      res.send(`Deleted ${deleted} video at id: ${docId}.`);
-    }
-  })
+      if (deleted === 0) {
+        res.send(`No video found with id: ${docId}.`);
+      } else {
+        res.send(`Deleted ${deleted} video at id: ${docId}.`);
+      }
+    })
 })
 
 module.exports = app;

@@ -2,7 +2,7 @@ const { PerformanceObserver, performance } = require('perf_hooks');
 const videoData = require('../../helpers/sdc/dataSdcMdb.js');// array of video data
 const indexMdb = require('./indexMdb.js');
 
-const [db, Video] = [indexMdb.db, indexMdb.Video];
+const [db, Video, Counter] = [indexMdb.db, indexMdb.Video, indexMdb.Counter];
 
 let initial = 0;
 let final = 0;
@@ -36,15 +36,22 @@ db.once('open', () => {
 
   };
 
-  Video.deleteMany({}, (errDel) => {
-    if (errDel) {
-      console.log('Error: ', errDel);
-    }
-    console.log('Inserting records... ');
+  Counter.create({
+    _id: "videoId",
+    video_number: 0
   })
     .then(() => {
-      initial = performance.now();
-      return insertData();
-    })
-    .catch(errCatch => console.log('Error catch: ', errCatch));
+      return Video.deleteMany({}, (errDel) => {
+        if (errDel) {
+          console.log('Error: ', errDel);
+        }
+        console.log('Inserting records... ');
+      })
+        .then(() => {
+          initial = performance.now();
+          return insertData();
+        })
+        .catch(errCatch => console.log('Error catch: ', errCatch));
+    });
+
 });

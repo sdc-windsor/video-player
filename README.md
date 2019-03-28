@@ -7,12 +7,18 @@
 - [1. Related Projects](#1-Related-Projects)
 - [2. Usage](#2-Usage)
   - [2.1 API](#21-API-Endpoints)
+  - [2.2 CRUD](#22-CRUD-ENDPOINTS)
 - [3. Development](#3-development)
 
 ## 1 Related Projects
 
-  - Related Videos: https://github.com/rpt11-spider-n-sleet/felipe-service
-  - Description/Comments: https://github.com/rpt11-spider-n-sleet/huy-service
+  - Related Videos: https://github.com/sdc-windsor/video-recommendations
+  - Descriptions/Comments 1: https://github.com/sdc-windsor/video-descriptions-sadie
+  - Descriptions/Comments 2: https://github.com/sdc-windsor/video-descriptions-jason
+
+
+  - Original Related Videos: https://github.com/rpt11-spider-n-sleet/felipe-service
+  - Original Description/Comments: https://github.com/rpt11-spider-n-sleet/huy-service
 
 ## 2 Usage
 
@@ -24,14 +30,28 @@
 **Video Player Nav-bar**
 ![](VidNavSm.gif)
 
-## 2.1 API Endpoints
+## 2.1 Main API Endpoints
 
 > The following endpoints return mock video data to be consumed by all three microservices: 
 
 - GET `/videos/:id`
-  - Retrieves id, title, author, video_url, and plays where the id matches the passed in id from the initial request.
+  - Reads id, title, author, video_url, and number of plays where the video document's ID matches the supplied id.
 - GET `/thumbnails/:id`
-  - Retrieves title, author, and thumbnail from the db. This endpoint can handle multiple ids as long as they are sent with '%2C', a comma, in-between them.
+  - Reads title, author, and thumbnail from the db. This endpoint can handle multiple ids as long as they are sent with '%2C', a comma, in-between them.
+
+## 2.2 Other CRUD Endpoints
+
+> The following endpoints create, update, and delete documents on the database: 
+
+- POST `/videos`
+  - Creates and inserts a new video document with an incrementing ID into the database
+
+- PUT `/videos/:id`
+  - Updates a video document at the supplied ID with new data
+
+- DELETE `/videos/:id`  
+  - Deletes one video document at the supplied ID
+  
 
 ## 3. Development
 

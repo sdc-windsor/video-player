@@ -62,8 +62,7 @@ app.get('/videos/:id', (req, res) => {
       res.json(results);
     })
     .catch((err) => {
-      console.log('Could not find video', err);
-      res.send('Error getting data');
+      res.send(`Caught error in finding video: ${err}`);
     });
 });
 
@@ -80,7 +79,7 @@ app.get('/thumbnails/:id', (req, res) => {
       }
     })
     .catch((err) => {
-      console.log('could not find thumbnail', err);
+      res.send(`Caught error in finding thumbnail: ${err}`);
     });
 });
 
@@ -89,17 +88,17 @@ app.post('/videos', (req, res) => {
   const updatedUrl = `${url}?v=${Math.random() * Math.floor(100000)}`;
 
   db.nextCount('videoId')
-  .then(newId => {
-    db.Video.create({
-      id: newId,
-      video_url: updatedUrl,
-      thumbnail: videoData.thumbnails[Math.floor(Math.random() * videoData.thumbnails.length)],
-      title: faker.address.streetName(),
-      author: faker.internet.userName(),
-      plays: faker.random.number(),
-    })
-    .then(result => res.send(`Created new video: ${result}`));
-  });
+    .then((newId) => {
+      db.Video.create({
+        id: newId,
+        video_url: updatedUrl,
+        thumbnail: videoData.thumbnails[Math.floor(Math.random() * videoData.thumbnails.length)],
+        title: faker.address.streetName(),
+        author: faker.internet.userName(),
+        plays: faker.random.number(),
+      })
+        .then(result => res.send(`Created new video: ${result}`));
+    });
 });
 
 app.put('/videos/:id', (req, res) => {
@@ -107,12 +106,12 @@ app.put('/videos/:id', (req, res) => {
 
   db.Video.findOneAndUpdate({ id: docId }, generateVideoData(videoData.videoUrls, videoData.thumbnails), { new: true }, (err, doc) => {
     if (err) {
-      res.send('Error updating document.');
+      res.send(`Error updating document: ${err}`);
     }
     res.send(`Document at id ${docId} updated to: ${doc}`);
   })
     .catch((error) => {
-      res.send(`Error: ${error}`);
+      res.send(`Error caught in updating document: ${error}`);
     });
 });
 
@@ -128,7 +127,7 @@ app.delete('/videos/:id', (req, res) => {
       } else {
         res.send(`Deleted ${deleted} video at id: ${docId}.`);
       }
-    })
-})
+    });
+});
 
 module.exports = app;

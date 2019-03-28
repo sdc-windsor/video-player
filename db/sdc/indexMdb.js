@@ -13,8 +13,8 @@ const videoDataSchema = new mongoose.Schema({
 
 const counterSchema = new mongoose.Schema({
   _id: String,
-  video_number: Number
-})
+  video_number: Number,
+});
 
 const Video = mongoose.model('Video', videoDataSchema);
 
@@ -24,7 +24,7 @@ const db = mongoose.connection;
 
 const nextCount = (videoId) => {
   return Counter.findOneAndUpdate({ _id: videoId }, { $inc: { video_number: 1 } }, { new: true })
-    .then((result) => result.video_number);
-}
+    .then(result => result.video_number);
+};
 
 module.exports = { db, mongoose, videoDataSchema, counterSchema, Video, Counter, nextCount };

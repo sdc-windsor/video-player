@@ -6,8 +6,8 @@
 
 - [1. Related Projects](#1-Related-Projects)
 - [2. Usage](#2-Usage)
-  - [2.1 API](#21-API-Endpoints)
-  - [2.2 CRUD](#22-CRUD-ENDPOINTS)
+  - [2.1 API](#21-Main-API-Endpoints)
+  - [2.2 CRUD](#22-Other-CRUD-Endpoints)
 - [3. Development](#3-development)
 
 ## 1 Related Projects

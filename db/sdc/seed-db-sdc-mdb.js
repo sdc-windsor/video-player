@@ -11,34 +11,35 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected to database');
   let count = 0;
-  const repeatTimes = 9; // this number * 100000 = total records inserted
+  const repeatTimes = 9999; // this number + 1 = total records inserted
 
   const insertData = () => {
-    Video.estimatedDocumentCount()
-      .then((counter) => {
-        const newVideoData = videoData;
-        for (let i = newVideoData.length - 1; i >= 0; i--) {
-          newVideoData[i].id = counter + (i + 1);
-        }
-        return Video.insertMany(newVideoData)
+    return videoData()
+      .then((data) => {
+        return Video.create(data)
           .then(() => {
             if (count < repeatTimes) {
               count++;
               return insertData();
             }
           });
-      })
-      .then(() => {
-        final = performance.now();
-        console.log('Time elapsed: ', `${(final - initial) / 1000} seconds`);
-      })
-      .then(() => {return console.log('Inserted 1000000 records')});
+      });
   };
 
-  Counter.create({
-    _id: 'videoId',
-    video_number: 10000000,
-  })
+  Counter.findById('videoId')
+    .then((result) => {
+      const startCount = {
+        _id: 'videoId',
+        video_number: 0,
+      };
+      if (result === null) {
+        Counter.create(startCount);
+      } else {
+        Counter.deleteMany({})
+          .then(() => Counter.create(startCount));
+      }
+      console.log('Deleting records...');
+    })
     .then(() => {
       return Video.deleteMany({}, (errDel) => {
         if (errDel) {
@@ -49,6 +50,12 @@ db.once('open', () => {
         .then(() => {
           initial = performance.now();
           return insertData();
+        })
+        .then(() => {
+          final = performance.now();
+          console.log('Time elapsed: ', `${(final - initial) / 1000} seconds`);
+          console.log(`Inserted ${repeatTimes + 1} records`);
+          process.exit();
         })
         .catch(errCatch => console.log('Error catch: ', errCatch));
     });

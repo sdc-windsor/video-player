@@ -1,4 +1,5 @@
 const faker = require('faker');
+const db = require('../../db/sdc/indexMdb.js')
 
 const videoUrls = [
   'https://player.vimeo.com/video/65107797/',
@@ -26,26 +27,21 @@ const thumbnails = [
   'https://i.vimeocdn.com/video/35989560_130x73.jpg',
 ];
 
-const generateJSONVideoData = (arr1, arr2) => {
-  const data = [];
-  // iterate until there are 100 entries in the array
-  for (let i = 0; i < 1000000; i++) {
-    // assign current url to a variable
-    const url = arr1[Math.floor(Math.random() * arr1.length)];
-    // update the url with incrementing queryNumber
-    const updatedUrl = `${url}?v=${i + 1}`;
-    // create key's in the object and use faker for some of the vals
-    data.push({
-      video_url: updatedUrl,
-      thumbnail: arr2[Math.floor(Math.random() * arr2.length)],
-      title: faker.address.streetName(),
-      author: faker.internet.userName(),
-      plays: faker.random.number(),
+const generateJSONVideoData = () => {
+  return db.nextCount('videoId')
+    .then((newId) => {
+      const url = videoUrls[Math.floor(Math.random() * videoUrls.length)];
+      const updatedUrl = `${url}?v=${newId}`;
+
+      return {
+        id: newId,
+        video_url: updatedUrl,
+        thumbnail: thumbnails[Math.floor(Math.random() * thumbnails.length)],
+        title: faker.address.streetName(),
+        author: faker.internet.userName(),
+        plays: faker.random.number(),
+      };
     });
-  }
-  return data;
 };
 
-const videoData = generateJSONVideoData(videoUrls, thumbnails);
-
-module.exports = videoData;
+module.exports = generateJSONVideoData;

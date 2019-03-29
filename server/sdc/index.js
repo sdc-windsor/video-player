@@ -9,7 +9,7 @@ const db = require('../../db/sdc/indexMdb.js');
 
 const app = express();
 app.use(express.static(path.join(__dirname, '/../../public/dist')));
-app.use('/:id', express.static(path.join(__dirname, '/../../public/dist')));
+app.use(/\/[0-9]+/, express.static(path.join(__dirname, '/../../public/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
@@ -100,6 +100,16 @@ app.post('/videos', (req, res) => {
         .then(result => res.send(`Created new video: ${result}`));
     });
 });
+
+app.get('/videos', (req, res) => {
+
+  db.Video.find()
+    .sort({ id: 1 })
+    .limit(100)
+    .then(results => res.send(`First 100 videos: ${results}`))
+    .catch(err => res.send(`Error finding documents: ${err}`));
+
+})
 
 app.put('/videos/:id', (req, res) => {
   const docId = req.params.id;

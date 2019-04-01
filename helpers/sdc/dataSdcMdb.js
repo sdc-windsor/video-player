@@ -1,5 +1,4 @@
 const faker = require('faker');
-const { nextCount } = require('../../db/sdc/indexMdb.js')
 
 const videoUrls = [
   'https://player.vimeo.com/video/65107797/',
@@ -27,20 +26,26 @@ const thumbnails = [
   'https://i.vimeocdn.com/video/35989560_130x73.jpg',
 ];
 
-const generateJSONVideoData = () => {
-  return nextCount('videoId')
-    .then((newId) => {
-      const url = `${videoUrls[Math.floor(Math.random() * videoUrls.length)]}?v=${newId}`;
+const batchSize = 10000;
+// How many documents to create/insert at once
 
-      return {
-        id: newId,
-        video_url: url,
-        thumbnail: thumbnails[Math.floor(Math.random() * thumbnails.length)],
-        title: faker.address.streetName(),
-        author: faker.internet.userName(),
-        plays: faker.random.number(),
-      };
+const generateJSONVideoData = async () => {
+
+  const dataArr = [];
+
+  for (let i = 1; i < (batchSize + 1); i++) {
+    const url = `${videoUrls[Math.floor(Math.random() * videoUrls.length)]}?v=${i}`;
+
+    dataArr.push({
+      video_url: url,
+      thumbnail: thumbnails[Math.floor(Math.random() * thumbnails.length)],
+      title: faker.address.streetName(),
+      author: faker.internet.userName(),
+      plays: faker.random.number(),
     });
+  }
+
+  return dataArr;
 };
 
 module.exports = generateJSONVideoData;

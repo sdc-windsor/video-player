@@ -9,24 +9,25 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected to database');
   let count = 0;
-  let dataArr = [];
-  const batchSize = 10000;
-  const repeatTimes = 0; // this number * batchSize = total records inserted
+  let repeatCounter = 0;
+  const repeatTimes = 1; // (this number + 1) * 10000 = total records inserted
 
   const insertData = () => {
     return videoData()
-      .then((newVid) => dataArr.push(newVid))
-      .then(() => {
-        if (dataArr.length < batchSize) {
-          return insertData();
-        } else {
-          return Video.insertMany(dataArr);
+      .then((dataArr) => {
+        const dataArrId = dataArr.slice();
+        count += dataArrId.length;
+
+        for (let i = count - dataArrId.length, j = 1; i < count; i++, j++) {
+          dataArrId[j].id = i;
         }
+
+        return dataArrId;
       })
+      .then(dataArrId => Video.insertMany(dataArrId))
       .then(() => {
-        if (count < repeatTimes) {
-          dataArr = [];
-          count++;
+        if (repeatCounter < repeatTimes) {
+          repeatCounter++;
           return insertData();
         }
       });
@@ -37,7 +38,7 @@ db.once('open', () => {
 
       const startCount = {
         _id: 'videoId',
-        video_number: 0,
+        video_number: 10000000,
       };
 
       if (result === null) {
@@ -62,7 +63,7 @@ db.once('open', () => {
         .then(() => {
           final = performance.now();
           console.log('Time elapsed: ', `${(final - initial) / 1000} seconds`);
-          console.log(`Inserted ${(repeatTimes + 1) * batchSize} records`);
+          console.log(`Inserted ${(repeatTimes + 1) * 10000} records`);
           process.exit();
         })
         .catch(errCatch => console.log('Error catch: ', errCatch));

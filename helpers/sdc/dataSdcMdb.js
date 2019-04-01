@@ -1,5 +1,5 @@
 const faker = require('faker');
-const db = require('../../db/sdc/indexMdb.js')
+const { nextCount } = require('../../db/sdc/indexMdb.js')
 
 const videoUrls = [
   'https://player.vimeo.com/video/65107797/',
@@ -28,14 +28,13 @@ const thumbnails = [
 ];
 
 const generateJSONVideoData = () => {
-  return db.nextCount('videoId')
+  return nextCount('videoId')
     .then((newId) => {
-      const url = videoUrls[Math.floor(Math.random() * videoUrls.length)];
-      const updatedUrl = `${url}?v=${newId}`;
+      const url = `${videoUrls[Math.floor(Math.random() * videoUrls.length)]}?v=${newId}`;
 
       return {
         id: newId,
-        video_url: updatedUrl,
+        video_url: url,
         thumbnail: thumbnails[Math.floor(Math.random() * thumbnails.length)],
         title: faker.address.streetName(),
         author: faker.internet.userName(),

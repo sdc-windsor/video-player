@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/videodb', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/videodbtest', { useNewUrlParser: true });
 
 const videoDataSchema = new mongoose.Schema({
   id: { type: Number, index: true, unique: true },

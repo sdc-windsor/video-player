@@ -10,7 +10,7 @@ db.once('open', () => {
   console.log('Connected to database');
   let count = 0;
   let repeatCounter = 0;
-  const repeatTimes = 1; // (this number + 1) * 10000 = total records inserted
+  const repeatTimes = 10; // (this number + 1) * 10000 = total records inserted
 
   const insertData = () => {
     return videoData()
@@ -18,8 +18,9 @@ db.once('open', () => {
         const dataArrId = dataArr.slice();
         count += dataArrId.length;
 
-        for (let i = count - dataArrId.length, j = 1; i < count; i++, j++) {
-          dataArrId[j].id = i;
+        for (let i = count - dataArrId.length, j = 0; i < count; i++ , j++) {
+          dataArrId[j].video_url += `?v=${i + 1}`;
+          dataArrId[j].id = i + 1;
         }
 
         return dataArrId;

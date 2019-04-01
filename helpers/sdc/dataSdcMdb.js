@@ -34,10 +34,9 @@ const generateJSONVideoData = async () => {
   const dataArr = [];
 
   for (let i = 1; i < (batchSize + 1); i++) {
-    const url = `${videoUrls[Math.floor(Math.random() * videoUrls.length)]}?v=${i}`;
 
     dataArr.push({
-      video_url: url,
+      video_url: `${videoUrls[Math.floor(Math.random() * videoUrls.length)]}`,
       thumbnail: thumbnails[Math.floor(Math.random() * thumbnails.length)],
       title: faker.address.streetName(),
       author: faker.internet.userName(),

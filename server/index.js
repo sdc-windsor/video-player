@@ -17,22 +17,22 @@ app.use(cors());
 app.get('/videos/:id', (req, res) => {
   const { id } = req.params;
 
-  db.select('id', 'video_url', 'title', 'author', 'plays')
+  db.select()
     .from('videos')
     .where('id', id)
     .then((data) => {
-      console.log('here is a list of the data', data);
+      // console.log('here is a list of the data', data);
       res.json(data);
     })
     .catch((err) => {
-      console.log('could not find video', err);
+      // console.log('could not find video', err);
       res.send('unable to find data');
     });
 });
 
 app.get('/thumbnails/:id', (req, res) => {
-  const { id } = req.params;
-  const params = (id.length > 1) ? id.split(',') : [id];
+  const docId = req.params.id;
+  const params = (docId.length > 1) ? docId.split(',') : [docId];
 
   db.select('title', 'author', 'thumbnail').from('videos')
     .whereIn('id', params)
@@ -41,7 +41,7 @@ app.get('/thumbnails/:id', (req, res) => {
     })
     .then((thumbnailArr) => {
       if (thumbnailArr) {
-        console.log('found the thumbnail', thumbnailArr);
+        // console.log('found the thumbnail', thumbnailArr);
         res.json(thumbnailArr);
       } else {
         res.send('unable to find thumbnail');

@@ -1,8 +1,6 @@
-const { PerformanceObserver, performance } = require('perf_hooks');
+const { performance } = require('perf_hooks');
 const videoData = require('../../helpers/sdc/dataSdcMdb.js');// array of video data
-const indexMdb = require('./indexMdb.js');
-
-const [db, mongoose] = [indexMdb.db, indexMdb.mongoose];
+const { db, Video, Counter } = require('./indexMdb.js');
 
 let initial = 0;
 let final = 0;
@@ -11,51 +9,64 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Connected to database');
   let count = 0;
-  const repeatTimes = 9; //this number * 100000 = total records inserted
-
-  const videoDataSchema = new mongoose.Schema({
-    id: Number,
-    video_url: String,
-    thumbnail: String,
-    title: String,
-    author: String,
-    plays: Number,
-  });
-
-  const Video = mongoose.model('Video', videoDataSchema);
+  let repeatCounter = 0;
+  const repeatTimes = 10; // (this number + 1) * 10000 = total records inserted
 
   const insertData = () => {
-    Video.estimatedDocumentCount()
-      .then((counter) => {
-        let newVideoData = videoData;
-        for (var i = newVideoData.length - 1; i >= 0; i--) {
-          newVideoData[i].id = counter + (i + 1);
-        }
-        return Video.insertMany(newVideoData)
-          .then(() => {
-            if (count < repeatTimes) {
-              count++;
-              return insertData();
-            }
-          })
-      })
-      .then(() => {
-        final = performance.now();
-        console.log('Time elapsed: ', `${(final - initial) / 1000} seconds`)
-      })
-      .then(() => console.log(`Inserted 1000000 records`));
+    return videoData()
+      .then((dataArr) => {
+        const dataArrId = dataArr.slice();
+        count += dataArrId.length;
 
+        for (let i = count - dataArrId.length, j = 0; i < count; i++ , j++) {
+          dataArrId[j].video_url += `?v=${i + 1}`;
+          dataArrId[j].id = i + 1;
+        }
+
+        return dataArrId;
+      })
+      .then(dataArrId => Video.insertMany(dataArrId))
+      .then(() => {
+        if (repeatCounter < repeatTimes) {
+          repeatCounter++;
+          return insertData();
+        }
+      });
   };
 
-  Video.deleteMany({}, (errDel) => {
-    if (errDel) {
-      console.log('Error: ', errDel);
-    }
-    console.log('Inserting records... ');
-  })
-    .then(() => {
-      initial = performance.now();
-      return insertData();
+  Counter.findById('videoId')
+    .then((result) => {
+
+      const startCount = {
+        _id: 'videoId',
+        video_number: 10000000,
+      };
+
+      if (result === null) {
+        Counter.create(startCount);
+      } else {
+        Counter.deleteMany({})
+          .then(() => Counter.create(startCount));
+      }
+      console.log('Deleting records...');
     })
-    .catch(errCatch => console.log('Error catch: ', errCatch));
+    .then(() => {
+      return Video.deleteMany({}, (errDel) => {
+        if (errDel) {
+          console.log('Error: ', errDel);
+        }
+        console.log('Inserting records... ');
+      })
+        .then(() => {
+          initial = performance.now();
+          return insertData();
+        })
+        .then(() => {
+          final = performance.now();
+          console.log('Time elapsed: ', `${(final - initial) / 1000} seconds`);
+          console.log(`Inserted ${(repeatTimes + 1) * 10000} records`);
+          process.exit();
+        })
+        .catch(errCatch => console.log('Error catch: ', errCatch));
+    });
 });

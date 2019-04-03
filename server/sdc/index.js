@@ -111,11 +111,7 @@ app.get('/videos', (req, res) => {
   db.Video.find({ id: { $gte: page } })
     .limit(100)
     .then(results => {
-      const data = [];
-      for (let video in results) {
-        data.push(results[video]);
-      }
-      res.send(`Videos from id: ${page}: ${data.join('<br/>')}`)
+      res.send(`Videos from id: ${page}: ${results.join('<br/>')}`)
     })
     .catch(err => res.send(`Error finding documents: ${err}`));
 

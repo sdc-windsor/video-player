@@ -84,18 +84,16 @@ app.get('/thumbnails/:id', (req, res) => {
 });
 
 app.post('/videos', (req, res) => {
-  const url = videoData.videoUrls[Math.floor(Math.random() * videoData.videoUrls.length)];
-  const updatedUrl = `${url}?v=${Math.random() * Math.floor(100000)}`;
 
   db.nextCount('videoId')
     .then((newId) => {
       db.Video.create({
-        id: newId,
-        video_url: updatedUrl,
+        video_url: `${videoData.videoUrls[Math.floor(Math.random() * videoData.videoUrls.length)]}?v=${newId}`,
         thumbnail: videoData.thumbnails[Math.floor(Math.random() * videoData.thumbnails.length)],
         title: faker.address.streetName(),
         author: faker.internet.userName(),
         plays: faker.random.number(),
+        id: newId,
       })
         .then(result => res.send(`Created new video: ${result}`));
     });
@@ -103,10 +101,22 @@ app.post('/videos', (req, res) => {
 
 app.get('/videos', (req, res) => {
 
-  db.Video.find()
-    .sort({ id: 1 })
+  let page = parseInt(req.query.page);
+  if (isNaN(page) || page < 1) {
+    page = 1;
+  }
+
+  page = (page - 1) * 100;
+
+  db.Video.find({ id: { $gte: page } })
     .limit(100)
-    .then(results => res.send(`First 100 videos: ${results}`))
+    .then(results => {
+      const data = [];
+      for (let video in results) {
+        data.push(results[video]);
+      }
+      res.send(`Videos from id: ${page}: ${data.join('<br/>')}`)
+    })
     .catch(err => res.send(`Error finding documents: ${err}`));
 
 })

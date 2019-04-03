@@ -10,7 +10,7 @@ db.once('open', () => {
   console.log('Connected to database');
   let count = 0;
   let repeatCounter = 0;
-  const repeatTimes = 10; // (this number + 1) * 10000 = total records inserted
+  const repeatTimes = 999; // (this number + 1) * 10000 = total records inserted
 
   const insertData = () => {
     return videoData()

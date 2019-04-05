@@ -36,6 +36,7 @@
 
 - GET `/videos/:id`
   - Reads id, title, author, video_url, and number of plays where the video document's ID matches the supplied id.
+
 - GET `/thumbnails/:id`
   - Reads title, author, and thumbnail from the db. This endpoint can handle multiple ids as long as they are sent with '%2C', a comma, in-between them.
 
@@ -45,12 +46,15 @@
 
 - POST `/videos`
   - Creates and inserts a new video document with an incrementing ID into the database
+  - Returns the new video document containing the video url, thumbnail url, title, author, play count, and id.
 
 - GET `/videos`
-  - Reads the first 100 video documents starting from {id: 1}, in ascending order
+  - Reads the first 100 video documents starting from {id: 1}, in ascending order if ?page=PAGENUMBER query is not supplied
+  - Returns video documents containing the video url, thumbnail url, title, author, play count, and id.
 
 - PUT `/videos/:id`
   - Updates a video document at the supplied ID with new data
+  - Returns the updated video document containing the video url, thumbnail url, title, author, play count, and id.
 
 - DELETE `/videos/:id`
   - Deletes one video document at the supplied ID
@@ -60,16 +64,16 @@
 
 > This Service uses the following tech stack:
 
-- Server: Node v10.14.1 (with Express)
+- Server: Node >=10.14.1, Express ^4.16.4
 - Deployment: AWS Elastic Beanstalk + S3
-- Client: React
-- Database: PostgreSQL (see installation below)
-- Testing: Jest
+- Client: React ^16.8.1
+- Database: PostgreSQL ^7.8.0 (see installation below), or MongoDB ^3.1.13
+- Testing: Jest ^24.1.0
 
 - Important packages and libs:
-  - ReactPlayer
-  - ReactIcons
-  - ReactStrap
+  - ReactPlayer ^1.9.3
+  - ReactIcons ^3.4.0
+  - ReactStrap ^7.1.0
 
 ## 3.1 PostgreSQL installation
 

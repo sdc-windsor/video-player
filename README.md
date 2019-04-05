@@ -1,13 +1,12 @@
 # Video Player Service
 
-> video player for vimeo clone group project.
+> Video player for vimeo clone group project.
 
 ## Table of Contents
 
 - [1. Related Projects](#1-Related-Projects)
 - [2. Usage](#2-Usage)
   - [2.1 API](#21-Main-API-Endpoints)
-  - [2.2 CRUD](#22-Other-CRUD-Endpoints)
 - [3. Development](#3-development)
 
 ## 1 Related Projects
@@ -32,21 +31,21 @@
 
 ## 2.1 Main API Endpoints
 
-> The following endpoints return mock video data to be consumed by all three microservices:
-
-- GET `/videos/:id`
-  - Reads id, title, author, video_url, and number of plays where the video document's ID matches the supplied id.
-
-- GET `/thumbnails/:id`
-  - Reads title, author, and thumbnail from the db. This endpoint can handle multiple ids as long as they are sent with '%2C', a comma, in-between them.
-
-## 2.2 Other CRUD Endpoints
-
 > The following endpoints create, update, and delete documents on the database:
 
 - POST `/videos`
   - Creates and inserts a new video document with an incrementing ID into the database
   - Returns the new video document containing the video url, thumbnail url, title, author, play count, and id.
+
+###### Returns mock video data consumed by all three microservices
+- GET `/videos/:id`
+  - Reads a video document where the id matches the supplied id.
+  - Returns a video document containing containing the video url, thumbnail url, title, author, play count, and id.
+
+###### Returns mock video data consumed by all three microservices
+- GET `/thumbnails/:id`
+  - Reads video documents where the id matches the supplied id.  This endpoint can handle multiple ids as long as they are sent with '%2C', a comma, in-between them.
+  - Returns video documents containing title, author, and thumbnail url.
 
 - GET `/videos`
   - Reads the first 100 video documents starting from {id: 1}, in ascending order if ?page=PAGENUMBER query is not supplied

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+require('dotenv').config();
+// mongoose.connect('mongodb://process.env.MongoDBUser:process.env.MongoDBPassword@ec2-13-57-214-163.us-west-1.compute.amazonaws.com/videodb', { useNewUrlParser: true, poolSize: 5 });
 mongoose.connect('mongodb://localhost/videodb', { useNewUrlParser: true, poolSize: 5 });
 
 const videoDataSchema = new mongoose.Schema({

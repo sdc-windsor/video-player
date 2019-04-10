@@ -54,6 +54,17 @@ const generateVideoData = (arr1, arr2) => {
   };
 };
 
+//endpoint for loader.io validation
+app.get('/:file.txt', (req, res, next)=>{
+  res.sendfile(`${req.params.file}.txt`, {root: __dirname}, (err)=>{
+    if (err) {
+      next(err);
+    } else {
+      console.log('file sent');
+    }
+  })
+});
+
 app.get('/videos/:id', (req, res) => {
   const docId = req.params.id;
 

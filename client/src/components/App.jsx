@@ -23,7 +23,7 @@ export default class App extends Component {
   }
 
   retrieveData(id) {
-    const url = 'http://localhost:3001';
+    const url = 'http://18.144.23.223:3001';
     return axios.get(`${url}/videos${id}`)
       .then((response) => {
         const { video_url, title } = response.data[0];

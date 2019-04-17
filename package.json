@@ -16,7 +16,7 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "nodemon server/sdc/server.js",
+    "start": "node server/sdc/server.js",
     "seed": "node db/seed-db.js",
     "seedSdcPg": "node db/sdc/seed-db-sdc-pg.js",
     "seedSdcMdb": "node db/sdc/seed-db-sdc-mdb.js",

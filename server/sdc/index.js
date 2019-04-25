@@ -117,7 +117,7 @@ app.get('/thumbnails/:id', (req, res) => {
     .then((thumbnailArr) => {
       if (thumbnailArr) {
         res.json(thumbnailArr);
-        client.set(req.originalUrl, JSON.stringify(results), redis.print);
+        client.set(req.originalUrl, JSON.stringify(thumbnailArr), redis.print);
       } else {
         res.send('Unable to find thumbnail');
       }

@@ -6,9 +6,37 @@ const path = require('path');
 const cors = require('cors');
 const faker = require('faker');
 const db = require('../../db/sdc/indexMdb.js');
+var redis = require('redis');
+var client = redis.createClient(6379, '52.53.241.140');
+
+const redisCaching = (req, res, next) => {
+  // console.log(`path ${req.path}`);
+  // console.log(`originalUrl ${req.originalUrl}`);
+  client.get(req.originalUrl, (err, results) => {
+    if (err) {
+      console.log(`Redis GET error: ${err}`);
+      throw error;
+    }
+    if (results !== null ) {
+      // console.log(`redis results ${results}`);
+      res.json(JSON.parse(results));
+    } else {
+      next();
+    }
+  });
+}
+
+client.on('connect', function () {
+  console.log('Redis client connected');
+});
+
+client.on('error', function (err) {
+  console.log('Something went wrong ' + err);
+});
 
 const app = express();
 app.use(express.static(path.join(__dirname, '/../../public/dist')));
+app.use(redisCaching);
 app.use(/^\/[0-9]+/, express.static(path.join(__dirname, '/../../public/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -55,8 +83,8 @@ const generateVideoData = (arr1, arr2) => {
 };
 
 //endpoint for loader.io validation
-app.get('/:file.txt', (req, res, next)=>{
-  res.sendfile(`${req.params.file}.txt`, {root: __dirname}, (err)=>{
+app.get('/:file.txt', (req, res, next) => {
+  res.sendfile(`${req.params.file}.txt`, { root: __dirname }, (err) => {
     if (err) {
       next(err);
     } else {
@@ -68,9 +96,13 @@ app.get('/:file.txt', (req, res, next)=>{
 app.get('/videos/:id', (req, res) => {
   const docId = req.params.id;
 
+  console.log(`path ${req.path}`);
+  console.log(`originalUrl: ${req.originalUrl}`)
+
   db.Video.find({ id: docId })
     .then((results) => {
       res.json(results);
+      client.set(req.originalUrl, JSON.stringify(results), redis.print);
     })
     .catch((err) => {
       res.send(`Caught error in finding video: ${err}`);
@@ -85,6 +117,7 @@ app.get('/thumbnails/:id', (req, res) => {
     .then((thumbnailArr) => {
       if (thumbnailArr) {
         res.json(thumbnailArr);
+        client.set(req.originalUrl, JSON.stringify(results), redis.print);
       } else {
         res.send('Unable to find thumbnail');
       }

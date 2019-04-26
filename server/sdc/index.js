@@ -7,7 +7,7 @@ const cors = require('cors');
 const faker = require('faker');
 const db = require('../../db/sdc/indexMdb.js');
 var redis = require('redis');
-var client = redis.createClient(6379, '52.53.241.140');
+var client = redis.createClient('6379', '18.144.23.223');
 
 const redisCaching = (req, res, next) => {
   // console.log(`path ${req.path}`);
@@ -35,8 +35,8 @@ client.on('error', function (err) {
 });
 
 const app = express();
-app.use(express.static(path.join(__dirname, '/../../public/dist')));
 app.use(redisCaching);
+app.use(express.static(path.join(__dirname, '/../../public/dist')));
 app.use(/^\/[0-9]+/, express.static(path.join(__dirname, '/../../public/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -1,6 +1,6 @@
 const { PerformanceObserver, performance } = require('perf_hooks');
-const videoData = require('../../helpers/sdc/dataSdcPg.js');// array of video data
-const db = require('../index.js');
+const videoData = require('../helpers/sdc/dataSdcPg.js');// array of video data
+const db = require('./index.js');
 
 let initial = 0;
 let final = 0;

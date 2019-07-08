@@ -1,5 +1,5 @@
 const { performance } = require('perf_hooks');
-const videoData = require('../../helpers/sdc/dataSdcMdb.js');// array of video data
+const videoData = require('../helpers/sdc/dataSdcMdb.js');// array of video data
 const { db, Video, Counter } = require('./indexMdb.js');
 
 let initial = 0;

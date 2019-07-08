@@ -16,10 +16,9 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "build": "webpack -p",
-    "start": "node server/sdc/server.js",
-    "seed": "node db/seed-db.js",
-    "seedSdcPg": "node db/sdc/seed-db-sdc-pg.js",
-    "seedSdcMdb": "node db/sdc/seed-db-sdc-mdb.js",
+    "start": "node server/server.js",
+    "seedSdcPg": "node db/seed-db-sdc-pg.js",
+    "seedSdcMdb": "node db/seed-db-sdc-mdb.js",
     "test": "jest --detectOpenHandles"
   },
   "dependencies": {

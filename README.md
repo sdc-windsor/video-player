@@ -64,7 +64,7 @@
 > This Service uses the following tech stack:
 
 - Server: Node >=10.14.1, Express ^4.16.4
-- Deployment: AWS Elastic Beanstalk + S3
+- Deployment: AWS EC2, nginx, Redis
 - Client: React ^16.8.1
 - Database: PostgreSQL ^7.8.0 (see installation below), or MongoDB ^3.1.13
 - Testing: Jest ^24.1.0
@@ -83,7 +83,6 @@
 From within the root directory:
 
 ```sh
-npm install -g webpack
 npm install
 ```
 
